@@ -130,12 +130,21 @@ and functions in the module where it was invoked:
   3. Function that will retrieve the key corresponding to a value in the
      `enum`. If there are is more than one key with the same value, the first
      one in the `enum` will be used and the duplicates will be disregarded.
+  4. Macros with names formed by appending the strings `_values` and `_keys` to
+     the name of the enum (e.g. `country_code_values/0`, `country_code_keys/0`).
+  5. Fallback functions with names formed by appending the strings `_enum_values`
+     and `_enum_keys` to the name of the values (e.g. `country_code_enum_values/0`,
+     `country_code_enum_keys/0`).
 
 e.g.
 ```elixir
 defmacro country_code(atom) :: String.t
 def country_code_enum(atom) :: String.t
 def from_country_code(String.t) :: atom
+defmacro country_code_values() :: [String.t()]
+def country_code_enum_values() :: [String.t()]
+defmacro country_code_keys() :: [atom()]
+def country_code_enum_keys() :: [atom()]
 ```
 
 The enumerated values can be accessed with a function call:
