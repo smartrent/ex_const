@@ -73,6 +73,9 @@ end
 defmodule DemoGuards do
   require Demo
 
+  def is_country_code_key?(v) when v in Demo.country_code_keys(), do: true
+  def is_country_code_key?(_), do: false
+
   def is_country_code?(v) when v in Demo.country_code_values(), do: true
   def is_country_code?(_), do: false
 end
@@ -218,5 +221,23 @@ defmodule ConstTest do
 
     assert DemoGuards.is_country_code?(Demo.country_code(:argentina)) == true
     assert DemoGuards.is_country_code?("ZZ") == false
+  end
+
+  test "enum keys" do
+    assert Demo.single_1_keys() = [:first]
+    assert Demo.single_2_keys() = [:first]
+    assert Demo.strings_keys() = [:one, :two, :three]
+    assert Demo.color_keys() = [:red, :green, :blue]
+    assert Demo.color_tuple_keys() = [:red, :green, :blue]
+    assert Demo.color_str_keys() = [:red, :green, :blue]
+    assert Demo.country_code_keys() = [:argentina, :brazil, :italy, :usa]
+    assert Demo.atoms_keys() = [:one, :two, :three]
+    assert Demo.tuples2_keys() = [:one, :two, :three]
+
+    assert DemoGuards.is_country_code?(Demo.country_code(:argentina)) == true
+    assert DemoGuards.is_country_code?("ZZ") == false
+
+    assert DemoGuards.is_country_code_key?(:argentina) == true
+    assert DemoGuards.is_country_code_key?(:westeros) == false
   end
 end
